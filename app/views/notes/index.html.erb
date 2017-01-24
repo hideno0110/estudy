@@ -9,6 +9,7 @@
         <%= link_to note.title, "/notes/#{note.id}" %>
       </span>
     </li>
-  <!-- ここにeachメソッドのendを書いてください -->
-<% end %>
+    <!-- ここにeachメソッドのendを書いてください -->
+  <% end %>
 </ul>
+<%= link_to "新規作成", notes_new_path , class: "btn primary-btn" %>

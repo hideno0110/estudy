@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Estudy</title>
+    <title>Estudy2</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -11,12 +11,14 @@
   <body>
     <header class="navbar">
       <div class="container">
-        <div id="logo">Estudy</div>
+        <div id="logo">Estudy I</div>
         <ul class="header-right">
           <li><%= link_to "Top", root_path %></li>
           <li><%= link_to "About", about_path %></li>
           <li><%= link_to "New", notes_new_path %></li>
-          <li><%= link_to "Index", notes_path %></li>
+          <li><%= link_to "Note", notes_path %></li>
+          <li><%= link_to "Article", articles_path %></li>
+          <li><%= link_to "ユーザー一覧", users_path %></li>
         </ul>
       </div>
     </header>
