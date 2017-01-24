@@ -18,7 +18,5 @@
 </aside>
 
 <ul class="notes">
-  <% @articles.each do |article| %>
-    <li><%= link_to article.title, article %></li>
-  <% end %>
+  <%= render @articles %>
 </ul>

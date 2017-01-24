@@ -1,14 +1,9 @@
-<p id="notice"><%= notice %></p>
+<p id="notice" class="alert alert-success"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @article.title %>
-</p>
+<h2>タイトル</h2>
+<p><%= @article.title %></p>
+<h2>内容</h2>
+<p><%= @article.content %></p>
 
-<p>
-  <strong>Content:</strong>
-  <%= @article.content %>
-</p>
-
-<%= link_to 'Edit', edit_article_path(@article) %> |
-<%= link_to 'Back', articles_path %>
+<%= link_to "編集", edit_article_path(@article.id), class: "btn edit-btn" %>
+<%= link_to "削除", article_path(@article.id), method: "delete", class: "btn destroy-btn", "data-confirm" => "本当に削除しますか？" %>
