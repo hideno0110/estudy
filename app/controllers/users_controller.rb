@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action :correct_user, only: [:edit, :update]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :like_articles]
   # GET /users
   # GET /users.json
   def index
@@ -11,6 +12,7 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @articles = Article.where(user_id: @user.id)
+    @title = "投稿一覧"
   end
 
   # GET /users/new
@@ -68,6 +70,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def like_articles
+    @articles = @user.like_articles.all
+    @title = "いいね一覧"
+    render :show
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -76,6 +84,13 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :email)
+      params.require(:user).permit(:name, :email, :password)
+    end
+
+    def correct_user 
+      user = User.find(params[:id])
+      if current_user?(user)
+        redirect_to root_path, alert: '許可されていないページです'
+      end
     end
 end

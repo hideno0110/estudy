@@ -1,7 +1,29 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :users
-  resources :articles
+  resources :users, only:[:index, :show, :edit, :update] do
+    member do
+      get :like_articles
+    end
+    collection do
+      post :search
+    end
+  end
+
+
+  resources :articles do
+    member do
+      get :liking_users
+    end
+    collection do
+      post :search
+    end
+  end
+
+
+
+  #likes
+  post 'like/:article_id' => 'likes#like', as: 'like'
+  delete 'unlike/:article_id' =>'likes#unlike', as: 'unlike'
 
   # notes
   get 'notes/new'

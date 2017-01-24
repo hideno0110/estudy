@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, only: [:show, :edit, :update, :destroy]
+  before_action :set_article, only: [:show, :edit, :update, :destroy, :liking_users]
   before_action :authenticate_user!
 
   # GET /articles
@@ -25,15 +25,16 @@ class ArticlesController < ApplicationController
   # POST /articles
   # POST /articles.json
   def create
-    @article = Article.new(article_params)
+    @article = current_user.articles.build(article_params)
 
     respond_to do |format|
       if @article.save
         format.html { redirect_to @article, notice: 'Article was successfully created.' }
         format.json { render :show, status: :created, location: @article }
       else
-        format.html { render :new }
+        format.html { render 'home/top' }
         format.json { render json: @article.errors, status: :unprocessable_entity }
+        @articles = Article.all.order(created_at: :desc)
       end
     end
   end
@@ -57,9 +58,14 @@ class ArticlesController < ApplicationController
   def destroy
     @article.destroy
     respond_to do |format|
-      format.html { redirect_to articles_url, notice: 'Article was successfully destroyed.' }
+      format.html { redirect_to root_path, notice: 'Article was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def liking_users
+    @users = @article.liking_users.all
+
   end
 
   private
@@ -70,6 +76,6 @@ class ArticlesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def article_params
-      params.require(:article).permit(:title, :content, :user_id)
+      params.require(:article).permit(:title, :content)
     end
 end
