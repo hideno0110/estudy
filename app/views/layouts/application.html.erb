@@ -14,15 +14,28 @@
         <div id="logo">Estudy I</div>
         <ul class="header-right">
           <li><%= link_to "Top", root_path %></li>
-          <li><%= link_to "About", about_path %></li>
-          <li><%= link_to "New", notes_new_path %></li>
-          <li><%= link_to "Note", notes_path %></li>
-          <li><%= link_to "Article", articles_path %></li>
-          <li><%= link_to "ユーザー一覧", users_path %></li>
+          <% if user_signed_in? %>
+            <li>current_user.email</li>   
+            <li><%= link_to "New", notes_new_path %></li>
+            <li><%= link_to "Note", notes_path %></li>
+            <li><%= link_to "Article", articles_path %></li>
+            <li><%= link_to "ユーザー一覧", users_path %></li>
+          <% else %>
+            <li><%= link_to "会員登録", new_user_registration_path %></li>
+            <li><%= link_to "サインイン", new_user_session_path %></li>
+            <li><%= link_to "About", about_path %></li>
+
+          <% end %> 
         </ul>
       </div>
     </header>
-    
+ 
+    <p class="alert alert-success">
+      <%= notice %> 
+    </p>
+    <p class="alert alert-danger">
+      <%= alert %> 
+    </p>   
     <%= yield %>
 
     <div class="container">

@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!
   # GET /users
   # GET /users.json
   def index
@@ -27,6 +27,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
+    file = params[:user][:image]
+    @user.set_image(file)
+
     respond_to do |format|
       if @user.save
         format.html { redirect_to @user, notice: 'User was successfully created.' }
@@ -41,6 +44,9 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
+    file = params[:user][:image]
+    @user.set_image(file)
+    
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
